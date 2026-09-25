@@ -197,7 +197,7 @@ class RenderApp:
 
         raw = self.bench_fbo.read(components=4, dtype='f4')
         arr = np.frombuffer(raw, dtype=np.float32).reshape(BENCH_H, BENCH_W, 4)
-        arr = np.flipud(arr)                          # OpenGL 原点在左下，需垂直翻转
+        arr = np.flipud(arr)
         arr = np.clip(arr[:, :, :3] * 255, 0, 255).astype(np.uint8)
 
         filename = datetime.now().strftime("screenshot_%Y%m%d_%H%M%S.png")
@@ -255,7 +255,7 @@ class RenderApp:
         if action == glfw.PRESS:
             if key == glfw.KEY_B:
                 self.run_benchmark()
-            elif key == glfw.KEY_S:          # ★ 新增 S 键截图
+            elif key == glfw.KEY_S:
                 self.save_screenshot()
             elif key == glfw.KEY_V:
                 self.render_enabled = not self.render_enabled
@@ -275,7 +275,7 @@ class RenderApp:
         print(
             f"Controls:\n"
             f" [B]   Run Benchmark ({BENCH_ITERATIONS} frames @ {BENCH_W}x{BENCH_H})\n"
-            f" [S]   Save Screenshot ({BENCH_W}x{BENCH_H} PNG)\n"   # ★
+            f" [S]   Save Screenshot ({BENCH_W}x{BENCH_H} PNG)\n"
             f" [V]   Toggle Visual Rendering\n"
             f" [Esc] Quit"
         )
