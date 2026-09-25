@@ -62,7 +62,7 @@ void main() {
     vec2 fragCoord = v_uv * iResolution.xy;
 
     vec2 uv = fragCoord / iResolution.xy;
-    uv.x   *= iResolution.x / iResolution.y;   // 保持宽高比
+    uv.x   *= iResolution.x / iResolution.y;
     uv      = uv * 10.0 + vec2(iTime * 0.04, 0.0);
 
     float n = fbm(uv);
@@ -191,7 +191,7 @@ class RenderApp:
 
         self.prog_noise['iResolution'].value = (size[0], size[1], 1.0)
         if 'iTime' in self.prog_noise:
-            self.prog_noise['iTime'].value = 0.0  # 离线烘焙时时间定格
+            self.prog_noise['iTime'].value = 0.0
 
         self.vao_noise.render(moderngl.TRIANGLE_STRIP)
         self.ctx.screen.use()
@@ -218,7 +218,7 @@ class RenderApp:
 
         raw = self.bench_fbo.read(components=4, dtype='f4')
         arr = np.frombuffer(raw, dtype=np.float32).reshape(BENCH_H, BENCH_W, 4)
-        arr = np.flipud(arr)  # OpenGL 原点在左下，需垂直翻转
+        arr = np.flipud(arr)
         arr = np.clip(arr[:, :, :3] * 255, 0, 255).astype(np.uint8)
 
         filename = datetime.now().strftime("screenshot_%Y%m%d_%H%M%S.png")
@@ -276,7 +276,7 @@ class RenderApp:
         if action == glfw.PRESS:
             if key == glfw.KEY_B:
                 self.run_benchmark()
-            elif key == glfw.KEY_S:  # ★ 新增 S 键截图
+            elif key == glfw.KEY_S:
                 self.save_screenshot()
             elif key == glfw.KEY_V:
                 self.render_enabled = not self.render_enabled
@@ -296,7 +296,7 @@ class RenderApp:
         print(
             f"Controls:\n"
             f" [B]   Run Benchmark ({BENCH_ITERATIONS} frames @ {BENCH_W}x{BENCH_H})\n"
-            f" [S]   Save Screenshot ({BENCH_W}x{BENCH_H} PNG)\n"  # ★
+            f" [S]   Save Screenshot ({BENCH_W}x{BENCH_H} PNG)\n"
             f" [V]   Toggle Visual Rendering\n"
             f" [Esc] Quit"
         )
